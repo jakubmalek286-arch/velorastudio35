@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Velora Studio — Pedikérský salón Praha</title>
+  <meta name="description" content="Profesionální pedikúra v Praze. Rezervujte termín online.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Hlavní navigace">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo" aria-label="Velora Studio — domů">
+        <img src="logo.png" alt="" class="nav__logo-img" aria-hidden="true">
+        <span>Velora Studio</span>
+      </a>
+      <button class="nav__toggle" id="navToggle" aria-label="Otevřít menu" aria-expanded="false" aria-controls="navLinks">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+      <ul class="nav__links" id="navLinks" role="list">
+        <li><a href="#sluzby">Služby</a></li>
+        <li><a href="#o-nas">O nás</a></li>
+        <li><a href="#rezervace">Rezervace</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <section class="hero" id="hero" aria-label="Úvod">
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow fade-up" data-delay="0">Pedikérský salón Praha</p>
+        <h1 class="hero__title fade-up" data-delay="100">Péče,<br><em>která potěší</em></h1>
+        <p class="hero__subtitle fade-up" data-delay="200">Profesionální pedikúra v klidném, minimalistickém prostředí. Protože vaše nohy si zaslouží to nejlepší.</p>
+        <div class="hero__btns fade-up" data-delay="300">
+          <a href="#sluzby" class="btn btn--hero-light">Naše služby</a>
+          <a href="#rezervace" class="btn btn--hero-primary">Rezervovat termín</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span class="hero__scroll-line"></span>
+      </div>
+    </section>
+
+    <section class="services section" id="sluzby" aria-labelledby="sluzby-title">
+      <div class="container">
+        <div class="section__header reveal">
+          <p class="section__eyebrow">Nabídka</p>
+          <h2 class="section__title" id="sluzby-title">Naše služby</h2>
+        </div>
+        <div class="services__grid" id="servicesGrid" role="list" aria-label="Seznam služeb"></div>
+      </div>
+    </section>
+
+    <section class="about section" id="o-nas" aria-labelledby="about-title">
+      <div class="container about__inner">
+        <div class="about__visual reveal" aria-hidden="true">
+          <div class="about__visual-inner">
+            <img src="logo.png" alt="" class="about__logo-img">
+          </div>
+        </div>
+        <div class="about__text reveal">
+          <p class="section__eyebrow">O nás</p>
+          <h2 class="about__title" id="about-title">Velora Studio</h2>
+          <p>Jsme malý, osobní salón v srdci Prahy. Věříme, že každá návštěva by měla být relaxačním zážitkem — proto dbáme na klidnou atmosféru, prémiové přípravky a precizní práci.</p>
+          <p>Naše certifikované pedikéřky mají více než 10 let zkušeností. Pracujeme výhradně s certifikovanými materiály a striktně dodržujeme hygienické standardy.</p>
+          <div class="about__stats" role="list">
+            <div class="about__stat" role="listitem">
+              <span class="about__stat-num" aria-label="Více než 2000">2 000+</span>
+              <span class="about__stat-label">spokojených klientek</span>
+            </div>
+            <div class="about__stat" role="listitem">
+              <span class="about__stat-num">10 let</span>
+              <span class="about__stat-label">zkušeností</span>
+            </div>
+            <div class="about__stat" role="listitem">
+              <span class="about__stat-num">100%</span>
+              <span class="about__stat-label">certifikované přípravky</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="booking section" id="rezervace" aria-labelledby="rezervace-title">
+      <div class="container">
+        <div class="section__header reveal">
+          <p class="section__eyebrow">Rezervace</p>
+          <h2 class="section__title" id="rezervace-title">Rezervujte termín</h2>
+        </div>
+        <div class="booking__card reveal">
+
+          <nav class="booking__steps" id="bookingSteps" aria-label="Kroky rezervace">
+            <div class="booking__step active" data-step="1" aria-current="step">
+              <span class="booking__step-num" aria-hidden="true">1</span>
+              <span class="booking__step-label">Služba</span>
+            </div>
+            <div class="booking__step-line" aria-hidden="true"></div>
+            <div class="booking__step" data-step="2">
+              <span class="booking__step-num" aria-hidden="true">2</span>
+              <span class="booking__step-label">Termín</span>
+            </div>
+            <div class="booking__step-line" aria-hidden="true"></div>
+            <div class="booking__step" data-step="3">
+              <span class="booking__step-num" aria-hidden="true">3</span>
+              <span class="booking__step-label">Údaje</span>
+            </div>
+            <div class="booking__step-line" aria-hidden="true"></div>
+            <div class="booking__step" data-step="4">
+              <span class="booking__step-num" aria-hidden="true">4</span>
+              <span class="booking__step-label">Shrnutí</span>
+            </div>
+          </nav>
+
+          <div class="booking__panels">
+
+            <div class="booking__panel active" id="panel1" role="tabpanel" aria-label="Výběr služby">
+              <h3 class="booking__panel-title">Vyberte službu</h3>
+              <div class="booking__service-grid" id="bookingServices" role="radiogroup" aria-label="Dostupné služby"></div>
+              <div class="booking__nav">
+                <span></span>
+                <button class="btn btn--primary" id="step1Next" disabled aria-disabled="true">Pokračovat</button>
+              </div>
+            </div>
+
+            <div class="booking__panel" id="panel2" role="tabpanel" aria-label="Výběr termínu" hidden>
+              <h3 class="booking__panel-title">Vyberte termín</h3>
+              <div class="booking__datetime">
+                <div class="calendar" id="calendar" role="application" aria-label="Kalendář pro výběr data"></div>
+                <div class="timeslots" id="timeslots" aria-live="polite" aria-label="Dostupné časy">
+                  <p class="timeslots__hint">Nejprve vyberte datum v kalendáři</p>
+                </div>
+              </div>
+              <div class="booking__nav">
+                <button class="btn btn--ghost" id="step2Back">Zpět</button>
+                <button class="btn btn--primary" id="step2Next" disabled aria-disabled="true">Pokračovat</button>
+              </div>
+            </div>
+
+            <div class="booking__panel" id="panel3" role="tabpanel" aria-label="Kontaktní údaje" hidden>
+              <h3 class="booking__panel-title">Vaše údaje</h3>
+              <form class="booking__form" id="bookingForm" novalidate>
+                <div class="form__group">
+                  <label for="fname">Jméno a příjmení <abbr title="povinné">*</abbr></label>
+                  <input type="text" id="fname" name="name" placeholder="Jana Nováková" autocomplete="name" required aria-required="true" aria-describedby="fnameError">
+                  <span class="form__error" id="fnameError" role="alert" aria-live="polite"></span>
+                </div>
+                <div class="form__row">
+                  <div class="form__group">
+                    <label for="femail">E-mail <abbr title="povinné">*</abbr></label>
+                    <input type="email" id="femail" name="email" placeholder="jana@email.cz" autocomplete="email" required aria-required="true" aria-describedby="femailError">
+                    <span class="form__error" id="femailError" role="alert" aria-live="polite"></span>
+                  </div>
+                  <div class="form__group">
+                    <label for="fphone">Telefon <abbr title="povinné">*</abbr></label>
+                    <input type="tel" id="fphone" name="phone" placeholder="+420 777 123 456" autocomplete="tel" required aria-required="true" aria-describedby="fphoneError">
+                    <span class="form__error" id="fphoneError" role="alert" aria-live="polite"></span>
+                  </div>
+                </div>
+                <div class="form__group">
+                  <label for="fnotes">Poznámka <span class="form__optional">(nepovinné)</span></label>
+                  <textarea id="fnotes" name="notes" rows="3" placeholder="Alergie, speciální požadavky..."></textarea>
+                </div>
+              </form>
+              <div class="booking__nav">
+                <button class="btn btn--ghost" id="step3Back">Zpět</button>
+                <button class="btn btn--primary" id="step3Next">Pokračovat</button>
+              </div>
+            </div>
+
+            <div class="booking__panel" id="panel4" role="tabpanel" aria-label="Potvrzení rezervace" hidden>
+              <h3 class="booking__panel-title">Potvrzení rezervace</h3>
+              <div class="booking__summary" id="bookingSummary" aria-label="Shrnutí rezervace"></div>
+              <p class="booking__email-note">Po potvrzení obdržíte e-mailové potvrzení s detaily rezervace.</p>
+              <div class="booking__nav">
+                <button class="btn btn--ghost" id="step4Back">Zpět</button>
+                <button class="btn btn--primary" id="step4Submit">
+                  <span id="submitText">Potvrdit rezervaci</span>
+                  <span id="submitSpinner" class="btn__spinner" aria-hidden="true" hidden></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="booking__panel" id="panel5" role="tabpanel" aria-label="Úspěšná rezervace" hidden>
+              <div class="booking__success">
+                <div class="booking__success-icon" aria-hidden="true">
+                  <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48" aria-hidden="true">
+                    <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M14 24l7 7 13-14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3>Rezervace potvrzena!</h3>
+                <p id="successMessage">Na váš e-mail jsme odeslali potvrzení s detaily rezervace. Těšíme se na vás!</p>
+                <button class="btn btn--primary" id="bookingReset">Nová rezervace</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" id="kontakt" aria-label="Kontakt a informace">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <p class="footer__logo">Velora Studio</p>
+        <p class="footer__tagline">Péče, která potěší.</p>
+      </div>
+      <div class="footer__col">
+        <h3 class="footer__heading">Adresa</h3>
+        <address>
+          Mánesova 12<br>
+          120 00 Praha 2
+        </address>
+      </div>
+      <div class="footer__col">
+        <h3 class="footer__heading">Otevírací doba</h3>
+        <p>Po–Pá: 9:00–19:00</p>
+        <p>So: 9:00–16:00</p>
+        <p>Ne: Zavřeno</p>
+      </div>
+      <div class="footer__col">
+        <h3 class="footer__heading">Kontakt</h3>
+        <p><a href="tel:+420777000000">+420 777 000 000</a></p>
+        <p><a href="mailto:info@velorastudio.cz">info@velorastudio.cz</a></p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2025 Velora Studio. Všechna práva vyhrazena.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

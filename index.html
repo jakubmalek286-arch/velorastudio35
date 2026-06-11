@@ -123,10 +123,11 @@
           <div class="booking__panels">
 
             <div class="booking__panel active" id="panel1" role="tabpanel" aria-label="Výběr služby">
-              <h3 class="booking__panel-title">Vyberte službu</h3>
-              <div class="booking__service-grid" id="bookingServices" role="radiogroup" aria-label="Dostupné služby"></div>
+              <h3 class="booking__panel-title">Vyberte služby</h3>
+              <p class="booking__select-hint">Můžete zvolit více služeb najednou.</p>
+              <div class="booking__service-grid" id="bookingServices" role="group" aria-label="Dostupné služby"></div>
               <div class="booking__nav">
-                <span></span>
+                <span class="booking__step1-total" id="step1Total" aria-live="polite"></span>
                 <button class="btn btn--primary" id="step1Next" disabled aria-disabled="true">Pokračovat</button>
               </div>
             </div>

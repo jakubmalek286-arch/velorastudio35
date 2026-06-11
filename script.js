@@ -17,14 +17,52 @@ const EMAILJS = {
 };
 
 /* ─── DATA ─── */
-const SERVICES = [
-  { id: 1, name: 'Express pedikúra',   duration: 30,  price: 399,  desc: 'Rychlá úprava nehtů a zbavení nánosů.' },
-  { id: 2, name: 'Klasická pedikúra',  duration: 45,  price: 599,  desc: 'Kompletní péče o nehty a kůži chodidel.' },
-  { id: 3, name: 'Wellness pedikúra',  duration: 75,  price: 849,  desc: 'Rituál s parní lázní, peelingem a maskou.' },
-  { id: 4, name: 'Luxusní pedikúra',   duration: 90,  price: 999,  desc: 'Prémiová péče s masáží a aromaterapií.' },
-  { id: 5, name: 'Gelové nehty',       duration: 60,  price: 750,  desc: 'Gelové zpevnění a lakování nehtů nohou.' },
-  { id: 6, name: 'Lakování nehtů',     duration: 20,  price: 250,  desc: 'Precizní lakování klasickým nebo gel lakem.' },
+const CATEGORIES = [
+  {
+    name: 'Pedikúra',
+    items: [
+      { id: 1,  name: 'Basic',        price: 700 },
+      { id: 2,  name: 'Comfort',      price: 800 },
+      { id: 3,  name: 'Relax',        price: 950 },
+      { id: 4,  name: 'Spa',          price: 1100 },
+      { id: 5,  name: 'Spa Deluxe',   price: 1250 },
+    ],
+  },
+  {
+    name: 'Doplňkové / samostatné služby',
+    items: [
+      { id: 6,  name: 'Lakování nehtu',            price: 200,  priceLabel: '200 Kč' },
+      { id: 7,  name: 'Gel lak',                   price: 400,  priceLabel: '400 Kč' },
+      { id: 8,  name: 'Ošetření zarostlého nehtu', price: 300,  priceLabel: 'Od 300 Kč' },
+      { id: 9,  name: 'Ošetření kuřího oka',        price: 300,  priceLabel: 'Od 300 Kč' },
+      { id: 10, name: 'Peeling nohou',              price: 250,  priceLabel: '250 Kč' },
+      { id: 11, name: 'Parafinový zábal nohou',     price: 300,  priceLabel: '300 Kč' },
+      { id: 12, name: 'Masáž nohou 20 min',         price: 400,  priceLabel: '400 Kč' },
+      { id: 13, name: 'Aplikace PODOFIX špony',     price: 500,  priceLabel: '500 Kč' },
+    ],
+  },
+  {
+    name: 'Masáže',
+    items: [
+      { id: 14, name: '60 min',  price: 900 },
+      { id: 15, name: '90 min',  price: 1200 },
+      { id: 16, name: '120 min', price: 1500 },
+    ],
+  },
+  {
+    name: 'Depilace',
+    items: [
+      { id: 17, name: 'Knírek / Brada', price: 150 },
+      { id: 18, name: 'Lýtka',          price: 300 },
+      { id: 19, name: 'Celé nohy',       price: 500 },
+      { id: 20, name: 'Ruce',            price: 350 },
+    ],
+  },
 ];
+
+const SERVICES = CATEGORIES.flatMap(cat =>
+  cat.items.map(item => ({ ...item, category: cat.name, priceLabel: item.priceLabel || `${item.price} Kč` }))
+);
 
 const OPENING = { start: 9, end: 18 };
 const CLOSED_DAYS = [0]; // 0 = neděle
@@ -32,12 +70,22 @@ const CLOSED_DAYS = [0]; // 0 = neděle
 /* ─── STATE ─── */
 const state = {
   step: 1,
-  service: null,
+  services: [],   // multi-select
   date: null,
   time: null,
   contact: {},
   calendarMonth: new Date(),
 };
+
+function totalPrice() {
+  return state.services.reduce((sum, s) => sum + s.price, 0);
+}
+function totalPriceLabel() {
+  if (state.services.length === 0) return '—';
+  const t = totalPrice();
+  const hasFrom = state.services.some(s => s.priceLabel && s.priceLabel.startsWith('Od'));
+  return (hasFrom ? 'Od ' : '') + t + ' Kč';
+}
 
 /* ─── BOOT ─── */
 document.addEventListener('DOMContentLoaded', () => {
@@ -103,14 +151,17 @@ function initAnimations() {
 function renderServices() {
   const grid = document.getElementById('servicesGrid');
   if (!grid) return;
-  grid.innerHTML = SERVICES.map(s => `
-    <article class="service-card reveal" role="listitem">
-      <p class="service-card__name">${s.name}</p>
-      <p class="service-card__desc">${s.desc}</p>
-      <div class="service-card__meta">
-        <span class="service-card__duration">${s.duration} min</span>
-        <span class="service-card__price">${s.price} Kč</span>
-      </div>
+  grid.innerHTML = CATEGORIES.map(cat => `
+    <article class="service-category reveal" role="listitem">
+      <p class="service-category__name">${cat.name}</p>
+      <ul class="service-category__list" role="list">
+        ${cat.items.map(item => `
+          <li class="service-category__item">
+            <span class="service-category__item-name">${item.name}</span>
+            <span class="service-category__item-price">${item.priceLabel || item.price + ' Kč'}</span>
+          </li>
+        `).join('')}
+      </ul>
     </article>
   `).join('');
 
@@ -130,35 +181,55 @@ function renderServices() {
 function renderBookingServices() {
   const container = document.getElementById('bookingServices');
   if (!container) return;
-  container.innerHTML = SERVICES.map(s => `
-    <button
-      class="booking__service-item"
-      role="radio"
-      aria-checked="false"
-      data-service-id="${s.id}"
-      aria-label="${s.name}, ${s.duration} minut, ${s.price} Kč"
-    >
-      <p class="bsi__name">${s.name}</p>
-      <p class="bsi__duration">${s.duration} min</p>
-      <p class="bsi__price">${s.price} Kč</p>
-    </button>
+  container.innerHTML = CATEGORIES.map(cat => `
+    <div class="booking__service-group">
+      <p class="booking__service-group-title">${cat.name}</p>
+      ${cat.items.map(s => `
+        <button
+          class="booking__service-item"
+          role="checkbox"
+          aria-checked="false"
+          data-service-id="${s.id}"
+          aria-label="${s.name}, ${s.priceLabel || s.price + ' Kč'}"
+        >
+          <span class="bsi__check" aria-hidden="true"></span>
+          <p class="bsi__name">${s.name}</p>
+          <p class="bsi__price">${s.priceLabel || s.price + ' Kč'}</p>
+        </button>
+      `).join('')}
+    </div>
   `).join('');
 
   container.querySelectorAll('.booking__service-item').forEach(btn => {
     btn.addEventListener('click', () => {
-      container.querySelectorAll('.booking__service-item').forEach(b => {
-        b.classList.remove('selected');
-        b.setAttribute('aria-checked', 'false');
-      });
-      btn.classList.add('selected');
-      btn.setAttribute('aria-checked', 'true');
       const svc = SERVICES.find(s => s.id === parseInt(btn.dataset.serviceId));
-      state.service = svc;
+      const idx = state.services.findIndex(s => s.id === svc.id);
+      if (idx === -1) {
+        state.services.push(svc);
+        btn.classList.add('selected');
+        btn.setAttribute('aria-checked', 'true');
+      } else {
+        state.services.splice(idx, 1);
+        btn.classList.remove('selected');
+        btn.setAttribute('aria-checked', 'false');
+      }
+      updateStep1Total();
       const next = document.getElementById('step1Next');
-      next.disabled = false;
-      next.removeAttribute('aria-disabled');
+      next.disabled = state.services.length === 0;
+      next.toggleAttribute('aria-disabled', state.services.length === 0);
     });
   });
+}
+
+function updateStep1Total() {
+  const el = document.getElementById('step1Total');
+  if (!el) return;
+  if (state.services.length === 0) {
+    el.textContent = '';
+  } else {
+    const names = state.services.map(s => s.name).join(', ');
+    el.textContent = `${state.services.length} ${state.services.length === 1 ? 'služba' : state.services.length < 5 ? 'služby' : 'služeb'} · ${totalPriceLabel()}`;
+  }
 }
 
 /* ─── BOOKING: STEP 2 — CALENDAR ─── */
@@ -234,7 +305,7 @@ function renderTimeslots() {
   const container = document.getElementById('timeslots');
   if (!container || !state.date || !state.service) return;
 
-  const duration = state.service.duration;
+  const duration = 60; // default slot length for calendar spacing
   const slots = [];
   let h = OPENING.start;
   let min = 0;
@@ -372,10 +443,16 @@ function renderSummary() {
   const container = document.getElementById('bookingSummary');
   if (!container) return;
   const dateStr = state.date?.toLocaleDateString('cs-CZ', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) || '—';
+  const servicesHtml = state.services.length > 0
+    ? state.services.map((s, i) => `
+        <div class="summary__row">
+          <span class="summary__label">${i === 0 ? 'Služby' : ''}</span>
+          <span class="summary__value">${s.name} — ${s.priceLabel}</span>
+        </div>`).join('')
+    : `<div class="summary__row"><span class="summary__label">Služby</span><span class="summary__value">—</span></div>`;
   container.innerHTML = `
-    <div class="summary__row"><span class="summary__label">Služba</span><span class="summary__value">${state.service?.name || '—'}</span></div>
-    <div class="summary__row"><span class="summary__label">Trvání</span><span class="summary__value">${state.service?.duration || '—'} min</span></div>
-    <div class="summary__row"><span class="summary__label">Cena</span><span class="summary__value">${state.service?.price || '—'} Kč</span></div>
+    ${servicesHtml}
+    <div class="summary__row summary__row--total"><span class="summary__label">Celkem</span><span class="summary__value">${totalPriceLabel()}</span></div>
     <div class="summary__row"><span class="summary__label">Datum</span><span class="summary__value">${dateStr}</span></div>
     <div class="summary__row"><span class="summary__label">Čas</span><span class="summary__value">${state.time || '—'}</span></div>
     <div class="summary__row"><span class="summary__label">Jméno</span><span class="summary__value">${state.contact.name || '—'}</span></div>
@@ -399,11 +476,11 @@ async function submitBooking() {
   const params = {
     to_name:      state.contact.name,
     to_email:     state.contact.email,
-    service_name: state.service?.name,
+    service_name: state.services.map(s => s.name).join(', '),
     date:         dateStr,
     time:         state.time,
     phone:        state.contact.phone,
-    price:        `${state.service?.price} Kč`,
+    price:        totalPriceLabel(),
     notes:        state.contact.notes || 'Žádná',
   };
 
@@ -428,7 +505,7 @@ async function submitBooking() {
 
 /* ─── RESET ─── */
 function resetBooking() {
-  state.service = null;
+  state.services = [];
   state.date = null;
   state.time = null;
   state.contact = {};
